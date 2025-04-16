@@ -12,7 +12,47 @@ window.addEventListener('DOMContentLoaded', () => {
     const resultSc = document.querySelector('.result-section')
     const mobNavBtn = document.querySelector('.mob-nav-btn')
 
+    const loading = document.querySelector('.loading')
+
+    loading.classList.add('On')
+
+    setTimeout(()=>{
+        const tl = gsap.timeline()
+
+        tl.to(loading,{
+            opacity:0,
+            duration:.3,
+            ease:'power2.out',
+            onComplete:()=>{
+                loading.style.display='none'
+                header.classList.add('load')
+
+            }
+        })
+        tl.fromTo('.fixed-section .t-wrap>*',{
+            delay:1,
+            opacity:0,
+            y:10
+        },{
+            
+            y:0,
+            stagger:.3,
+            opacity:1
+        })
+
+
+
+    },2000)
+
+
     let hasEntered = false
+
+
+
+    //1. header load 효과
+
+
+
 
     mobNavBtn.addEventListener('click',(e)=>{
         e.preventDefault()
@@ -49,8 +89,6 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 
 
-    //1. header load 효과
-    header.classList.add('load')
 
 
     //2. 헤더 효과 (휠 방향에 따라 클래스 토글)
