@@ -11,12 +11,13 @@ GSAP, Swiper, jQuery 등 다양한 기술을 사용하여 실제 웹처럼 동�
 - HTML5 / CSS3 (Reset, Layout, Media Query)
 - JavaScript (ES6+)
 - jQuery
-- GSAP + ScrollTrigger
+- GSAP + ScrollTrigger + AOS
 - Swiper.js (슬라이더)
 - 반응형 웹 구현 (미디어 쿼리)
 
 ### 🧩 주요 기능
 
+- 로딩 애니메이션
 - 섹션별 고정/스크롤 효과
 - 모바일 메뉴, 검색 모달
 - 다크모드 스타일 전환
@@ -60,14 +61,24 @@ project/
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8"> <!-- 문자 인코딩을 UTF-8로 설정 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 설정 -->
-  <title>Document</title> <!-- 브라우저 탭 제목 -->
-  <link rel="stylesheet" href="./css/style.css"> <!-- 스타일시트 연결 (모든 CSS 통합됨) -->
+  <!-- 문자 인코딩과 뷰포트 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAVER AI RUSH</title>
+  <!-- 외부 CSS 연결 -->
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
-<body class="">
-  <!-- 모바일 메뉴 (햄버거 클릭 시 열림) -->
+<body>
+
+  <!-- 🔸 로딩 화면 (페이지 로드 중에 보여짐) -->
+  <div class="loading">
+    <div class="loading-progress">
+      <span></span>
+    </div>
+  </div>
+
+  <!-- 🔸 모바일 내비게이션 메뉴 (햄버거 메뉴 클릭 시 열림) -->
   <div class="modal-nav">
     <ul class="nav-list">
       <li><a href="#">ai rush</a></li>
@@ -77,112 +88,113 @@ project/
     </ul>
   </div>
 
-  <div class="overlay"></div> <!-- 모달 뒷배경용 오버레이 -->
+  <!-- 🔸 모달 메뉴 뒤의 어두운 배경 -->
+  <div class="overlay"></div>
 
-  <!-- 상단 내비게이션 영역 -->
+  <!-- 🔸 상단 헤더: 로고 + 내비게이션 -->
   <header>
-    <div class="inner"> <!-- 가운데 정렬 및 최대 너비 설정 -->
+    <div class="inner">
+      <!-- 로고 -->
       <h1>
-        <a href="#" class="logo-link"> <!-- 로고 영역 -->
-          <span class="blind">naver ai rush</span> <!-- 시각장애인을 위한 텍스트 -->
+        <a href="#" class="logo-link">
+          <span class="blind">naver ai rush</span>
         </a>
       </h1>
+
+      <!-- 내비게이션 메뉴 (데스크탑용) -->
       <nav>
-        <ul class="nav-list"> <!-- 내비게이션 메뉴 -->
+        <ul class="nav-list">
           <li><a href="#">ai rush</a></li>
           <li><a href="#">ai biz</a></li>
           <li><a href="#">ai study</a></li>
           <li><a href="#">notice</a></li>
         </ul>
-        <a href="#" class="btn sch-btn">sch-btn</a> <!-- 검색 버튼 -->
-        <a href="#" class="btn mob-nav-btn"></a> <!-- 모바일 햄버거 버튼 -->
+        <!-- 검색 버튼 -->
+        <a href="#" class="btn sch-btn">sch-btn</a>
+        <!-- 모바일용 햄버거 버튼 -->
+        <a href="#" class="btn mob-nav-btn">mobile btn</a>
       </nav>
     </div>
 
-    <!-- 검색창 모달 -->
+    <!-- 🔸 검색 모달 (검색 아이콘 클릭 시 나타남) -->
     <div class="sch-modal">
       <div class="sch-box">
-        <button class="btn sch-modal-btn"> <!-- 닫기 버튼 -->
+        <button class="btn sch-modal-btn">
           <span class="blind">검색하기</span>
         </button>
-        <input type="text" class="sch-bar" autofocus placeholder="관심있는 주제나 키워드를 검색해 보세요"> <!-- 검색 입력창 -->
+        <input type="text" class="sch-bar" autofocus placeholder="관심있는 주제나 키워드를 검색해 보세요">
       </div>
     </div>
-    <div class="sch-modal-bg"></div> <!-- 검색창 뒤 배경 -->
+    <div class="sch-modal-bg"></div>
   </header>
 
-  <!-- 인트로 고정 섹션 (영상 포함) -->
+  <!-- 🔹 인트로(고정 배경) 섹션 -->
   <section class="fixed-section">
     <div class="inner">
       <div class="t-wrap">
+        <!-- 로고 이미지 -->
         <h2 class="s-tit">
-          <img src="./img/image.png" alt="logo"> <!-- 인트로 이미지 -->
+          <img src="./img/image.png" alt="logo">
         </h2>
+        <!-- 프로그램 소개 문구 -->
         <p class="s-txt">
           네이버 AI RUSH는 미래를 향한 다양한 파트너가 모여 <br>
-          AI 기술, 경험, 노하우를 나누고 성장을 이어가는 프로그램입니다.
+          AI 기술, 경험, 노하우를 나누고<br class="mob-only"> 성장을 이어가는 프로그램입니다.
         </p>
-        <a href="#" class="btn gradient">
-          ai study 시작하기
-        </a>
+        <!-- CTA 버튼 -->
+        <a href="#" class="btn gradient">ai study 시작하기</a>
       </div>
     </div>
 
-    <!-- 영상 롤링 효과 영역 -->
+    <!-- 🔸 영상 롤링 영역 (백그라운드 영상 반복) -->
     <div class="rolling-wrap">
       <div class="rolling-in">
-        <!-- 여러 개의 영상 반복 재생 -->
+        <!-- 영상 반복 출력 -->
         <video autoplay muted loop class="rolling-content">
           <source src="./img/spot_rolling_01.mp4" type="video/mp4">
         </video>
-        <!-- 반복적으로 영상 삽입 (총 12개) -->
-        <!-- 생략된 다른 영상들도 동일한 형식 -->
+        <!-- ... 동일한 형식으로 영상 여러 개 나열됨 ... -->
       </div>
     </div>
   </section>
 
-  <!-- 전체 페이지 내용이 담길 컨테이너 -->
+  <!-- 🔹 메인 콘텐츠 영역 시작 -->
   <div id="container">
 
-    <!-- 섹션 1: 기술 흐름 소개 + 슬라이더 -->
+    <!-- ✅ SECTION 1: AI 기술 트렌드 소개 -->
     <section class="sc-section sc-section-1">
       <div class="inner">
-        <h2 class="s-tit">
+        <h2 class="s-tit" data-aos="fade-up">
           주목해야할 AI 기술 흐름을 테마로 선정해 <br>
           다양한 AI 리더 그룹과 함께 <br>
           새로운 인사이트를 발견합니다.
         </h2>
-        <h2 class="s-tit-moshow1"> <!-- 모바일용 제목 -->
-          AI 기술을 테마로<br>
-          다양한 AI 리더 그룹과<br>
-          새로운 인사이트를<br>
-          발견합니다.
-        </h2>
 
-        <!-- 슬라이더 설명 텍스트 + 버튼 -->
         <div class="flex-wrap">
           <p class="s-txt">
             대학생 앰배서더와 스타트업 파트너가 모여 <br>
-            함께 나눈 HyperCLOVA X의 경험과 <br>트렌드를 확인해보세요.
+            함께 나눈 HyperCLOVA X의 경험과 트렌드를 확인해보세요.
           </p>
+
+          <!-- 슬라이드 좌우 버튼 -->
           <div class="arr-wrap">
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
           </div>
         </div>
 
-        <!-- 슬라이더 영역 -->
+        <!-- 🔸 슬라이더 영역 -->
         <div class="sc1-slider-wrap">
           <div class="swiper sc1-slider">
             <div class="swiper-wrapper">
-              <!-- 카드 1 -->
-              <div class="swiper-slide">
+              <!-- 슬라이드 카드 1 -->
+              <div class="swiper-slide" data-aos="fade-up">
                 <a href="#">
                   <div class="img-wrap">
                     <img src="./img/sc-1-card-1.png" alt="card">
                   </div>
                   <div class="t-wrap">
-                    <h3>Ai를 일상에 적용하는 법: 대학생 편</h3>
+                    <h3>Ai를 일상에 적용하는 법 : 대학생 편</h3>
                     <p class="txt">
                       <span>채널테크</span>
                       <span>앰배서더 활동 후기</span>
@@ -190,68 +202,57 @@ project/
                   </div>
                 </a>
               </div>
-              <!-- 카드 2, 3도 동일한 형식으로 구성 -->
+              <!-- 슬라이드 카드 2, 3 ... 생략 가능 -->
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 섹션 2: 혜택 및 자격 -->
+    <!-- ✅ SECTION 2: 앰배서더 혜택 -->
     <section class="sc-section sc-section-2">
       <div class="inner">
         <div class="t-wrap">
-          <h2 class="s-tit">
-            <span> AI 기술에 관심있는 대학생 앰배서더들과</span>
-            <span>
-              <a href="#" class="gradient-link">
-                <div class="blind">hyper CLOVA X</div>
-              </a> 의 사용 경험을 나누며</span>
-            <span>
-              AI 리더로 성장할 수 있는 기회를 만들어갑니다.
-            </span>
-          </h2>
-          <h2 class="s-tit-moshow2"> <!-- 모바일 전용 -->
-            대학생 앰배서더들과<br>
-            <a href="#" class="gradient-link">
-              <div class="blind">hyper CLOVA X</div>
-            </a> 의 <br>
-            경험을 통해 AI 리더로 성장 <br>
-            하는 기회를 만들어갑니다.
+          <h2 class="s-tit" data-aos="fade-up">
+            <span>AI 기술에 관심있는 대학생 앰배서더들과</span>
+            <span><a href="#" class="gradient-link">HyperCLOVA X</a>의 사용 경험을 나누며</span>
+            <span>AI 리더로 성장할 수 있는 기회를 만들어갑니다.</span>
           </h2>
         </div>
 
-        <!-- 혜택 카드 리스트 -->
+        <!-- 🔸 혜택 카드 리스트 -->
         <ul class="sc2-lst">
-          <li> <!-- 카드 1 -->
+          <li data-aos="fade-up">
             <div class="img-wrap">
               <img src="./img/img_student_benefit_01.png" alt="">
             </div>
             <div class="card-txt-wrap">
               <h3>AI 활용 <br> 포트폴리오 도출</h3>
-              <p>콘텐츠를 기획하고 제작할 수 있습니다.</p>
+              <p>HyperCLOVA X를 활용하여 다양한 콘텐츠를 기획하고 제작해 볼 수 있습니다.</p>
             </div>
           </li>
-          <!-- 나머지 3개의 혜택 카드도 동일한 형식 -->
+          <!-- 나머지 혜택 카드들 생략 가능 -->
         </ul>
 
-        <!-- 지원 자격 -->
+        <!-- 🔸 지원 자격 안내 -->
         <div class="info-wrap info-wrap-1">
-          <h4>앰배서더 지원 자격</h4>
+          <h4 data-aos="fade-up">앰배서더 지원 자격</h4>
           <ul class="info-lst">
-            <li>2명~4명 팀 구성</li>
-            <li>7월~9월 활동 가능자</li>
-            <li>AI 기술 트렌드에 관심 있는 분</li>
+            <li data-aos="fade-up">재학 중인 대학생 및 대학원생 2~4명 팀</li>
+            <li data-aos="fade-up" data-aos-delay="50">7~9월 앰배서더 활동 가능자</li>
+            <li data-aos="fade-up" data-aos-delay="100">AI 기술 트렌드에 관심 있는 분</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 섹션 3: 활동 단계 및 예시 -->
+    <!-- ✅ SECTION 3: 활동 구조 및 일정 -->
     <section class="sc-section sc-section-3">
       <div class="inner">
-        <div class="info-wrap info-wrap-2"> <!-- 3단계 프로그램 -->
-          <h4>총 3단계 성장 프로그램이 진행됩니다.</h4>
+
+        <!-- 🔸 활동 3단계 소개 -->
+        <div class="info-wrap info-wrap-2">
+          <h4 data-aos="fade-up">총 3단계 성장 프로그램이 진행됩니다.</h4>
           <ul class="info-lst">
             <li>
               <em class="num">01</em>
@@ -260,28 +261,30 @@ project/
                 <p>일상, 전공, 사회</p>
               </div>
             </li>
-            <!-- 2, 3 단계도 동일 형식 -->
+            <!-- 단계 2, 3 생략 가능 -->
           </ul>
         </div>
 
-        <!-- 활동 예시 3가지 -->
+        <!-- 🔸 활동 주제 설명 -->
         <div class="info-wrap info-wrap-3">
-          <h4>AI 아이디어 예시</h4>
+          <h4 data-aos="fade-up">
+            HyperCLOVA X를 활용하여 다양한 주제로<br class="mob-only">
+            AI 아이디어 제안과 콘텐츠 기획을 할 수 있습니다.
+          </h4>
           <ul class="info-lst">
-            <li>
+            <li data-aos="fade-up">
               <h5>AI Experience</h5>
-              <p class="sm-tit">일상 기반 아이디어</p>
-              <p>건강, 취미 등 변화 필요성 해결</p>
+              <p class="sm-tit">일상에서 출발한 AI 아이디어</p>
             </li>
-            <!-- 나머지 2개도 동일 형식 -->
+            <!-- 나머지 항목 생략 -->
           </ul>
         </div>
 
-        <!-- 진행 일정 -->
+        <!-- 🔸 전체 일정 -->
         <div class="info-wrap info-wrap-4">
           <h4>진행일정</h4>
           <ul class="info-lst">
-            <li>
+            <li data-aos="fade-up">
               <div class="left">
                 <em class="num">1</em>
                 <h5>앰배서더 참가 지원</h5>
@@ -290,27 +293,32 @@ project/
                 <div class="date">7월 3일까지</div>
               </div>
             </li>
-            <!-- 발표일, 운영 기간도 동일 형식 -->
+            <!-- 일정 2~3 생략 -->
           </ul>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- 결과 섹션 -->
+  <!-- ✅ 참여 결과물 섹션 -->
   <section class="result-section">
     <div class="inner">
       <div class="t-wrap">
-        <h2 class="s-tit">
-          AI RUSH 프로그램 결과물 소개
+        <h2 class="s-tit" data-aos="fade-up">
+          AI RUSH 프로그램에 참여한<br>
+          스타트업 Demo 및<br class="mob-only"> 대학생 앰배서더 결과물입니다.
         </h2>
-        <a href="#" class="arrow"></a> <!-- 화살표 -->
+        <!-- 우측 화살표 아이콘 링크 -->
+        <a href="#" class="arrow"></a>
       </div>
+
+      <!-- 결과물 리스트 -->
       <ul class="result-lst">
         <li>
           <a href="#">
             <div class="img-wrap">
-              <video class="card_video" autoplay muted loop>
+              <!-- 결과물 비디오 -->
+              <video class="card_video" autoplay muted loop playsinline preload="auto">
                 <source src="./img/rush2024_biz_video_1.mp4" type="video/mp4">
               </video>
             </div>
@@ -320,32 +328,29 @@ project/
             </div>
           </a>
         </li>
-        <!-- 나머지 결과들도 같은 형식으로 반복 -->
+        <!-- 다른 결과물 생략 -->
       </ul>
     </div>
   </section>
 
-  <!-- 하단 푸터 -->
+  <!-- ✅ 하단 푸터 -->
   <footer>
     <div class="inner in1">
       <div class="left">
         <h2 class="tit">
-          네이버 AI와 HyperCLOVA X에 관한 <br>
+          네이버 AI와 <br class="mob-only"> HyperCLOVA X에 관한 <br>
           핵심 콘텐츠를 확인해보세요!
         </h2>
         <a href="#" class="qna">
-          <span> 자주 묻는 질문 </span>
+          <span>자주 묻는 질문</span>
           <i class="ico"></i>
         </a>
       </div>
-      <div class="btn gradient">
-        ai study 시작하기
-      </div>
+      <!-- CTA 버튼 -->
+      <div class="btn gradient">ai study 시작하기</div>
     </div>
     <div class="inner in2">
-      <div class="copy">
-        © NAVER Cloud Corp.
-      </div>
+      <div class="copy">ⓒ NAVER Cloud Corp.</div>
       <div class="info">
         <a href="#">개인정보처리방침</a>
         <a href="#">고객센터</a>
@@ -353,15 +358,25 @@ project/
     </div>
   </footer>
 
-  <!-- 외부 스크립트 연결 -->
+  <!-- 🔸 외부 라이브러리 (애니메이션, 슬라이더 등) -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="./js/script.js"></script> <!-- 메인 스크립트 -->
+  <script src="./js/script.js"></script>
+
 </body>
 </html>
+
 ```
+
+---
 
 ### css
 
@@ -619,39 +634,88 @@ p.s-txt {
 ### layout.css
 
 ```css
-/* layout.css - 페이지의 전체 구조 및 배치, 섹션 스타일 담당 */
-
-/* 모바일 내비게이션 버튼 기본값 숨김 */
+.mob-only,
 .mob-nav-btn {
     display: none;
 }
 
-/* 상단 헤더 위치와 기본 애니메이션 */
+.loading{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 7;
+}
+.loading-progress{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(.8);
+    width: 30.7rem;
+    height: 14.1rem;
+}
+.loading-progress::before,
+.loading-progress::after{
+    position: absolute;
+    display: block;
+    content:"";
+    width: 100%;
+    height: 100%;
+}
+
+.loading-progress::before{
+    background: url(../img/loading.png) no-repeat center/cover;
+}
+
+.loading-progress::after{
+    background-color: #eee;
+    z-index: -2;
+    transform: scale(.8);
+}
+
+.loading-progress span{
+    position: absolute;
+    display: block;
+    transform: scale(.8);
+    width: 0%;
+    height: 100%;
+    background: rgb(213, 80, 181);
+    background: linear-gradient(90deg, rgba(213, 80, 181, 1) 0%, rgba(67, 19, 237, 1) 100%);
+    z-index: -1;
+    transition: width 1s ease-in-out;
+}
+
+.loading.On .loading-progress span{
+width: 100%;
+}
+
 header {
     position: absolute;
     z-index: 5;
     top: 0;
     height: 8.8rem;
-    transform: translateY(-100%); /* 처음에는 위로 숨김 */
+    transform: translateY(-100%);
     transition: all .3s ease-in-out;
+
 }
 
-/* 페이지 로드시 헤더가 아래로 내려오게 함 */
 header.load {
     transform: translateY(0);
+
 }
 
-/* 스크롤 시 헤더 고정 */
 header.up {
     position: fixed;
 }
 
-/* 다크모드에서 고정 헤더의 배경을 그라데이션 블랙으로 변경 */
 body.dark header.up {
+    background: rgb(0,0,0);
     background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    
 }
 
-/* 헤더 내부 레이아웃 정렬 */
 header .inner {
     display: flex;
     justify-content: space-between;
@@ -659,7 +723,6 @@ header .inner {
     max-width: 151.4rem;
 }
 
-/* 로고 이미지 백그라운드 설정 */
 .logo-link {
     display: block;
     width: 20.3rem;
@@ -667,7 +730,6 @@ header .inner {
     background: url(../img/logo_naver_ai_rush.svg) no-repeat center/100%;
 }
 
-/* 내비게이션 리스트 정렬 */
 nav {
     display: flex;
     gap: 6.2rem;
@@ -675,7 +737,7 @@ nav {
 
 .nav-list {
     display: flex;
-    gap: 6.5rem;
+    gap: 6.5rem
 }
 
 .nav-list a {
@@ -684,7 +746,6 @@ nav {
     font-size: 1.6rem;
 }
 
-/* 검색 버튼 아이콘 */
 nav .sch-btn {
     width: 1.8rem;
     height: 1.8rem;
@@ -693,7 +754,6 @@ nav .sch-btn {
     padding: 0;
 }
 
-/* 고정된 상단 인트로 섹션 */
 .fixed-section {
     position: fixed;
     height: 100vh;
@@ -704,16 +764,15 @@ nav .sch-btn {
     padding-top: 14.5rem;
 }
 
-/* 고정 섹션 내부 정렬 */
 .fixed-section .inner {
     height: auto;
     display: flex;
     flex-direction: column;
     text-align: center;
     justify-content: flex-end;
+
 }
 
-/* 고정 섹션의 제목 너비 제한 */
 .fixed-section h2.s-tit {
     max-width: 70rem;
     margin: auto;
@@ -723,12 +782,12 @@ nav .sch-btn {
     margin: 4.6rem auto 5rem;
 }
 
-/* 롤링 영역: 영상들이 좌우로 이동하는 효과 */
 .rolling-wrap {
     overflow: hidden;
     margin-top: 10rem;
     white-space: nowrap;
     position: absolute;
+    bottom: 0;
 }
 
 .rolling-in {
@@ -737,28 +796,26 @@ nav .sch-btn {
     animation: rolling 30s linear infinite;
 }
 
-.rolling-in video {
-    width: 39rem;
+.rolling-content {
+    width: 35rem;
 }
 
-/* 메인 컨테이너 */
 #container {
-    padding-top: 100vh; /* fixed-section 아래에 위치하도록 */
-    padding-bottom: 100vh; /* result-section 고정 위치 확보 */
+    padding-top: 100vh;
+    padding-bottom: 100vh;
     position: relative;
     width: 100%;
 }
 
-/* 각 스크롤 섹션 */
 #container .sc-section {
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     height: 100vh;
     z-index: 3;
     padding: 20rem 0;
     transition: background-color 1s ease-in-out;
 }
 
-/* 다크모드 스타일 */
+/* dark class binding */
 body.dark #container .sc-section {
     background-color: #000;
     color: #fff;
@@ -766,11 +823,12 @@ body.dark #container .sc-section {
 
 body.dark #container .sc-section * {
     color: #fff;
+
 }
 
-/* 다크모드 로고, 내비게이션, 검색 아이콘 교체 */
 body.dark header.up .logo-link {
     background-image: url(../img/logo_naver_ai_rush_white.svg);
+
 }
 
 body.dark header.up .nav-list a {
@@ -781,201 +839,829 @@ body.dark header.up nav .sch-btn {
     background-image: url(../img/header-sch-wh.png);
 }
 
+/* sch-modal */
+.sch-modal-bg {
+    position: fixed;
+    width: 100%;
+    height: 38.8rem;
+    background-color: #ffffff;
+    z-index: 3;
+    top: 0;
+    display: none;
+}
+
+.sch-modal {
+    position: fixed;
+    top: 8.8rem;
+    width: 100%;
+    height: 30rem;
+    z-index: 6;
+    display: none;
+    /* background-color: salmon; */
+}
+
+.sch-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sch-bar {
+    width: 82.4rem;
+    padding: 1.3rem 0;
+    font-weight: 800;
+    font-size: 4.6rem;
+    line-height: 6.9rem;
+    color: #1a1a1a;
+    caret-color: #8a67fb;
+    vertical-align: middle;
+
+}
+
+.sch-modal-btn {
+    width: 4.6rem;
+    height: 4.6rem;
+    background: url(../img/sch-ico-bl.svg) no-repeat center/contain;
+}
+
+.overlay {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #0000007d;
+    visibility: hidden;
+}
+
+.sch-modal-open header .inner {
+    z-index: 7;
+}
+
+.sch-modal-open header nav {
+    visibility: hidden;
+}
+
+.sch-modal-open .sch-modal {
+    display: block;
+}
+
+.sch-modal-open .overlay {
+    visibility: visible;
+}
+
+/* 1 */
+#container .sc-section-1 {
+    height: auto
+}
+
+.sc-section-1 .flex-wrap {
+    margin: 16.5rem 0 8rem;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.sc-section-1 .flex-wrap h2.s-tit {
+    font-size: 3rem;
+    line-height: 4.8rem;
+}
+
+.sc-section-1 .flex-wrap .swiper-button-next,
+.sc-section-1 .flex-wrap .swiper-button-prev {
+    position: static;
+    width: 4rem;
+    height: 4rem;
+
+}
+
+.sc-section-1 .flex-wrap .swiper-button-next:after,
+.sc-section-1 .flex-wrap .swiper-button-prev:after {
+    display: none;
+}
+
+.sc-section-1 .arr-wrap {
+    display: flex;
+}
+
+.sc-section-1 .flex-wrap .swiper-button-next {
+    background: url(../img/arr-next.png) no-repeat center/contain;
+}
+
+.sc-section-1 .flex-wrap .swiper-button-prev {
+    background: url(../img/arr-prev.png) no-repeat center/contain;
+}
+
+.sc1-slider {
+    overflow: visible;
+    width: 101rem;
+    margin: 0;
+}
+
+.sc1-slider .img-wrap {
+    overflow: hidden;
+}
+
+.sc1-slider .img-wrap img {
+    display: block;
+    transition: transform .5s linear;
+}
+
+.sc1-slider .img-wrap:hover img {
+    transform: scale(1.05);
+}
+
+.sc1-slider .t-wrap h3 {
+    margin: 3rem 0 2rem;
+    font-size: 2.6rem;
+    line-height: 2.9rem;
+    color: #1A1A1A;
+
+}
+
+.sc1-slider .t-wrap .txt {
+    font-size: 1.6rem;
+    color: #1A1A1A;
+    opacity: .6;
+
+}
+
+.sc1-slider .t-wrap .txt span+span {}
+
+/* sc-section-2 */
+#container .sc-section-2 {
+    height: auto;
+}
+
+.sc-section-2 h2.s-tit span {
+    display: block;
+    /* line-height: 7.5rem; */
+
+}
+
+.gradient-link {
+    display: inline-block;
+    width: 37.8rem;
+    height: 7.5rem;
+    /* background-color: #8a67fb; */
+    transform: translateY(1.5rem);
+    position: relative;
+}
+
+.gradient-link::after,
+.gradient-link::before {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.gradient-link::after {
+    background: linear-gradient(90deg, rgb(233, 255, 40), rgb(65, 244, 247));
+    background-size: 200% 200%;
+    z-index: 0;
+    animation: gradientMove 1s ease infinite;
+    animation-play-state: paused;
+
+}
+
+.gradient-link::before {
+    background: url(../img/img_hyperclovax_text.png) no-repeat center/100%;
+    z-index: 1;
+}
+
+.gradient-link:hover::after {
+    animation-play-state: running;
+
+}
+
+.sc-section-2 .sc2-lst {
+    display: flex;
+    gap: 2.6rem;
+    margin-top: 6rem;
+    padding-bottom: 23rem;
+}
+
+.sc-section-2 .sc2-lst h3 {
+    margin: 2.3rem 0 2.2rem;
+}
+
+/* info 1 */
+.info-wrap-1 .info-lst {
+    margin: 4.5rem 0 0 3rem;
+    list-style-type: disc;
+}
+
+.info-wrap-1 .info-lst li {
+    font-size: 2.8rem;
+    font-weight: 500;
+    line-height: 3rem;
+    opacity: .6;
+    position: relative;
+    /* text-indent: 3rem; */
+
+}
+
+.info-wrap-1 .info-lst li+li {
+    margin-top: 2.6rem;
+}
+
+/* info 2 */
+.info-wrap-2 {
+    text-align: center;
+}
+
+.info-wrap-2 h4 {
+    text-align: left;
+}
+
+.info-wrap-2 .info-lst {
+    display: inline-flex;
+    gap: 5rem;
+    justify-content: center;
+    align-items: center;
+    background: rgb(209, 78, 182);
+    background: linear-gradient(90deg, rgba(209, 78, 182, 0.3) 0%, rgba(72, 21, 235, 0.3) 100%);
+    border-radius: 50rem;
+    padding: 2rem;
+    margin: 8.5rem auto;
+}
+
+.info-wrap-2 .info-lst li {
+    width: 32rem;
+    height: 32rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.info-wrap-2 .info-lst li:nth-child(1) {
+    background: rgb(213, 80, 181);
+    background: linear-gradient(90deg, rgba(213, 80, 181, 1) 0%, rgba(171, 63, 197, 1) 100%);
+}
+
+.info-wrap-2 .info-lst li:nth-child(2) {
+    background: rgb(160, 58, 201);
+    background: linear-gradient(90deg, rgba(160, 58, 201, 1) 0%, rgba(119, 41, 217, 1) 100%);
+}
+
+.info-wrap-2 .info-lst li:nth-child(3) {
+    background: rgb(108, 36, 221);
+    background: linear-gradient(90deg, rgba(108, 36, 221, 1) 0%, rgba(67, 19, 237, 1) 100%);
+}
+
+.info-wrap-2 .info-lst li h5 {
+    line-height: 3.2rem;
+}
+
+.info-wrap-2 .info-lst li p {
+    font-size: 2rem;
+}
+
+/* sc-section-3 */
+#container .sc-section-3 {
+    height: auto;
+}
+
+.info-wrap-3 .info-lst {
+    display: flex;
+    margin-top: 13.8rem;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.info-wrap-3 .info-lst li {
+    flex: 1;
+    position: relative;
+    /* width: calc(100% / 3); */
+}
+
+.info-wrap-3 .info-lst li+li::before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 180px;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0;
+    background-color: #535353;
+}
+
+.info-wrap-3 .info-lst p {
+    margin: 2rem auto 3.3rem;
+    font-size: 1.8rem;
+    /* font-weight: bold; */
+    line-height: 3.4rem;
+}
+
+.info-wrap-3 .info-lst p.sm-tit {
+    line-height: 1;
+    font-size: 1.6rem;
+}
+
+.info-wrap-4 .info-lst {
+    margin-top: 11.6rem;
+}
+
+.info-wrap-4 .info-lst li {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.1);
+    align-items: flex-start;
+    padding: 3rem
+}
+
+.info-wrap-4 .info-lst li .left {
+    align-items: center;
+    display: flex;
+    gap: 2.5rem;
+}
+
+.info-wrap-4 .info-lst li .left .num {
+    background-color: #fff;
+    color: #000 !important;
+    font-weight: 900;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    line-height: 3rem;
+}
+
+.info-wrap-4 .info-lst li+li {
+    margin-top: .3rem;
+}
+
+.info-wrap-4 .info-lst li .right {
+    text-align: right;
+}
+
+.info-wrap-4 .info-lst li .right .date+p,
+.info-wrap-4 .info-lst li .right .date {
+    display: block;
+    font-size: 2rem;
+    text-align: right;
+    line-height: 3.4rem;
+}
+
+.info-wrap-4 .info-lst li .right .date+p {
+    margin-top: 2rem;
+}
+
+.result-section {
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    height: auto;
+    background-color: #fff;
+    padding: 20rem 0;
+
+}
+
+.result-section .t-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+}
+
+.result-section .t-wrap h2.s-tit {
+    font-size: 3rem;
+    line-height: 4.8rem;
+}
+
+.result-section .t-wrap .arrow {
+    width: 3.2rem;
+    height: 3rem;
+    background: url(../img/arr-next.png) no-repeat center / contain;
+}
+
+.result-lst {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.6rem;
+    margin-top: 7.6rem;
+}
+
+.result-lst li {
+    width: 32rem;
+    padding-bottom: 10rem;
+
+}
+
+.result-t-box h4.tit {
+    margin: 2.2rem 0;
+    font-size: 1.8rem;
+}
+
+.result-t-box .txt {
+    font-size: 1.5rem;
+}
+
+footer {
+    background-color: #fff;
+    padding: 0 0 9rem;
+}
+
+footer .in1 {
+    border-top: .1rem solid #1a1a1a;
+    padding-top: 6rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .in1 h2.tit {
+    font-size: 5rem;
+    line-height: 7rem;
+    font-weight: 800;
+}
+
+footer .qna {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 3.8rem;
+    margin-top: 7.8rem;
+
+}
+
+footer .qna .ico {
+    display: inline-block;
+    width: 4rem;
+    height: 3.7rem;
+    background: url(../img/arr-next.png) center/contain;
+    transition: all .3s;
+}
+
+footer .qna:hover .ico {
+    transform: translateX(1rem);
+}
+
+footer .in2 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7.7rem;
+    color: rgba(0, 0, 0, 0.47);
+
+}
+
+footer .in2 .copy {
+    font-size: 1.4rem;
+}
+
+footer .info a {
+    font-size: 1.6rem;
+    display: inline-block;
+}
+
+footer .info a+a {
+    padding-left: 2rem;
+    border-left: .1rem solid #eee;
+    margin-left: 2rem;
+}
 ```
 
 ### media.css
 
-```jsx
-/* media.css - 반응형 웹을 위한 스타일 (브레이크포인트별 레이아웃 조정) */
-
-/* 화면 너비가 1514px 이하일 때 */
-@media screen and (max-width:1514px) {
-    .result-lst {
-        gap: 1rem; /* 결과물 간격 축소 */
+- 1514px
+    
+    ```css
+    /* 화면 크기 1514px 이하일 때 적용되는 스타일 */
+    @media screen and (max-width:1514px) {
+    
+        /* 공통 스타일 */
+        .inner {
+            padding: 0 3rem; /* 내부 여백을 좌우 3rem으로 설정 */
+        }
+    
+        h2.s-tit {
+            font-size: 4rem; /* h2 제목 폰트 크기 */
+            line-height: 6rem; /* 줄 간격 설정 */
+        }
+    
+        p.s-txt {
+            font-size: 2.1rem; /* 본문 텍스트 폰트 크기 */
+            line-height: 3.3rem; /* 본문 텍스트 줄 간격 */
+        }
+    
+        .btn {
+            padding: 0 3rem; /* 버튼 내부 여백 설정 */
+            font-size: 1.5rem; /* 버튼 폰트 크기 */
+            height: 5rem; /* 버튼 높이 */
+        }
+    
+        .gradient-link {
+            height: 5.6rem; /* 그라디언트 링크의 높이 */
+        }
+    
+        /* 네비게이션 관련 */
+        nav {
+            gap: 2rem; /* 네비게이션 아이템 간 간격 */
+        }
+    
+        .btn.mob-nav-btn {
+            display: block; /* 모바일 네비게이션 버튼을 표시 */
+            width: 1.8rem;
+            height: 1.8rem;
+            background: url(../img/hamburger-bl.svg) no-repeat center/contain; /* 햄버거 메뉴 아이콘 */
+            font-size: 0; /* 폰트 크기 제거 */
+            padding: 0; /* 여백 제거 */
+        }
+    
+        /* 다크 모드 스타일 */
+        body.dark header.up nav .btn.mob-nav-btn {
+            background-image: url(../img/hamburger-wh.svg); /* 다크 모드에서는 흰색 햄버거 아이콘 사용 */
+        }
+    
+        /* 모달 네비게이션 */
+        .modal-nav {
+            display: block;
+            position: fixed;
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            z-index: 6;
+            top: -110%; /* 화면 위로 숨겨 놓기 */
+            padding: 6.8rem 3rem;
+            text-align: center;
+            transition: top .3s; /* 모달이 위에서 내려오는 애니메이션 */
+        }
+    
+        .modal-nav .nav-list {
+            flex-direction: column; /* 네비게이션 리스트 세로로 배치 */
+        }
+    
+        .modal-nav .nav-list li a {
+            font-size: 2rem; /* 네비게이션 항목 폰트 크기 */
+            font-weight: 900; /* 폰트 두께 설정 */
+            line-height: 3.2rem; /* 줄 간격 */
+            text-transform: uppercase; /* 대문자 변환 */
+        }
+    
+        /* 모달 네비게이션 표시 */
+        .show-modal-nav .modal-nav {
+            top: 0; /* 모달을 화면에 표시 */
+        }
+    
+        .show-modal-nav .overlay {
+            visibility: visible; /* 오버레이 표시 */
+        }
+    
+        .show-modal-nav header {
+            z-index: 7; /* 헤더가 모달 위로 표시되도록 설정 */
+        }
+    
+        .show-modal-nav .mob-nav-btn {
+            background-image: url(../img/modal-nav-close.svg); /* 닫기 버튼 이미지로 변경 */
+        }
+    
+        /* 고정된 섹션 */
+        .fixed-section h2.s-tit {
+            width: 56.5rem; /* 제목의 최대 너비 설정 */
+        }
+    
+        .rolling-content {
+            width: 33rem; /* 롤링 콘텐츠의 너비 설정 */
+        }
+    
+        .fixed-section p.s-txt {
+            margin: 3.8rem 0 4rem; /* 고정된 섹션의 본문 텍스트 여백 */
+        }
+    
+        /* 각 섹션 */
+        #container .sc-section {
+            padding: 16rem 0; /* 섹션 패딩 */
+        }
+    
+        .card-txt-wrap h3 {
+            font-size: 1.8rem; /* 카드 제목 폰트 크기 */
+            line-height: 2.6rem; /* 카드 제목 줄 간격 */
+        }
+    
+        .card-txt-wrap p {
+            font-size: 1.3rem; /* 카드 본문 폰트 크기 */
+            line-height: 2.2rem; /* 카드 본문 줄 간격 */
+        }
+    
+        .info-wrap h4 {
+            font-size: 2.4rem; /* 정보 섹션 제목 폰트 크기 */
+            line-height: 3.8rem; /* 정보 섹션 제목 줄 간격 */
+        }
+    
+        .sc-section-1 .flex-wrap {
+            margin: 13rem 0 5.3rem; /* 첫 번째 섹션의 여백 */
+        }
+    
+        .sc1-slider {
+            width: 57.8rem; /* 슬라이더 너비 */
+        }
+    
+        .info-wrap-1 .info-lst li {
+            font-size: 1.8rem; /* 첫 번째 정보 리스트 항목 폰트 크기 */
+            line-height: 2.1rem; /* 첫 번째 정보 리스트 항목 줄 간격 */
+        }
+    
+        .info-wrap-1 .info-lst li+li {
+            margin-top: 1.8rem; /* 리스트 항목 간 여백 */
+        }
+    
+        .sc1-slider .t-wrap h3 {
+            font-size: 1.8rem; /* 슬라이더 텍스트 제목 폰트 크기 */
+            line-height: 2.6rem; /* 슬라이더 텍스트 제목 줄 간격 */
+            margin: 2rem 0 1.5rem; /* 슬라이더 텍스트 제목 여백 */
+        }
+    
+        /* 두 번째 섹션 */
+        .sc-section-2 .sc2-lst {
+            gap: 1.2rem; /* 두 번째 섹션의 리스트 항목 간 간격 */
+        }
+    
+        /* 정보 래핑 */
+        .info-wrap-2 .info-lst {
+            gap: 2rem; /* 정보 리스트 항목 간 간격 */
+        }
+    
+        .info-wrap-2 .info-lst li {
+            width: 27rem; /* 리스트 항목 너비 */
+            height: 27rem; /* 리스트 항목 높이 */
+        }
+    
+        .info-lst .num {
+            font-size: 1.8rem; /* 번호 폰트 크기 */
+        }
+    
+        .info-lst h5,
+        .info-wrap-2 .info-lst li h5 {
+            font-size: 2.2rem; /* 정보 리스트 제목 폰트 크기 */
+        }
+    
+        .info-wrap-3 .info-lst p,
+        .info-wrap-2 .info-lst li p {
+            font-size: 1.6rem; /* 정보 리스트 본문 폰트 크기 */
+            line-height: 2rem; /* 정보 리스트 본문 줄 간격 */
+        }
+    
+        .info-wrap-3 .info-lst p.sm-tit {
+            font-size: 1.2rem; /* 작은 제목 폰트 크기 */
+        }
+    
+        .info-wrap-4 .info-lst li {
+            padding: 2rem; /* 리스트 항목 여백 */
+        }
+    
+        /* 결과 섹션 */
+        .result-section {
+            padding: 16rem 0; /* 결과 섹션 패딩 */
+        }
+    
+        .result-lst {
+            gap: 1.4rem; /* 결과 리스트 항목 간 간격 */
+        }
+    
+        .result-lst li {
+            width: calc(50% - .7rem); /* 결과 리스트 항목 너비 */
+        }
+    
     }
-
-    .inner {
-        padding: 0 3rem; /* 양쪽 여백 확보 */
+    
+    ```
+    
+- 1200px
+    
+    ```css
+    /* 화면 크기 1200px 이하일 때 적용되는 스타일 */
+    @media screen and (max-width:1200px) {
+    /* 헤더 높이 변경 */
+    header {
+        height: 6.4rem;
     }
-
-    /* 모바일 내비게이션 메뉴 */
-    .modal-nav {
-        display: block;
-        position: fixed;
-        width: 100%;
-        background-color: #fff;
-        z-index: 6;
-        top: -110%;
-        padding: 6.8rem 3rem;
-        text-align: center;
-        transition: top .3s;
-    }
-
-    /* 모바일 메뉴 항목 세로 정렬 */
-    .modal-nav .nav-list {
-        flex-direction: column;
-    }
-
-    /* 모바일 내비게이션 링크 스타일 */
-    .modal-nav .nav-list li a {
-        font-size: 2rem;
-        font-weight: 900;
-        line-height: 3.2rem;
-        text-transform: uppercase;
-    }
-
-    nav {
-        gap: 2rem; /* 내비게이션 간격 축소 */
-    }
-
-    /* 햄버거 메뉴 버튼 */
-    .btn.mob-nav-btn {
-        display: block;
-        width: 1.8rem;
-        height: 1.8rem;
-        background: url(../img/hamburger-bl.svg) no-repeat center/contain;
-        font-size: 0;
-        padding: 0;
-    }
-
-    header .nav-list {
-        display: none; /* 데스크탑 내비게이션 숨김 */
-    }
-
-    .show-modal-nav .modal-nav {
-        top: 0; /* 햄버거 클릭 시 메뉴 표시 */
-    }
-
-    .show-modal-nav .overlay {
-        visibility: visible;
-    }
-
-    .show-modal-nav header {
-        z-index: 7;
-    }
-
-    .show-modal-nav nav .sch-btn,
-    .show-modal-nav header h1 {
-        visibility: hidden;
-    }
-
-    .show-modal-nav .mob-nav-btn {
-        background-image: url(../img/modal-nav-close.svg);
-    }
-
-    .btn {
-        padding: 0 3rem;
-        font-size: 1.5rem;
-        height: 5rem;
-    }
-
-    #container .sc-section {
-        padding: 16rem 0;
-    }
-
-    h2.s-tit {
-        font-size: 4rem;
-        line-height: 6rem;
-    }
-
-    p.s-txt {
-        font-size: 2.1rem;
-        line-height: 3.3rem;
-    }
-
-    .card-txt-wrap h3 {
-        font-size: 1.8rem;
-        line-height: 2.6rem;
-    }
-
-    .card-txt-wrap p {
-        font-size: 1.3rem;
-        line-height: 2.2rem;
-    }
-
-    .info-wrap h4 {
-        font-size: 2.4rem;
-        line-height: 3.8rem;
-    }
-
-    .fixed-section h2.s-tit {
-        width: 56.5rem;
-    }
-
-    .fixed-section p.s-txt {
-        margin: 3.8rem 0 4rem;
-    }
-
-    .sc-section-1 .flex-wrap {
-        margin: 13rem 0 5.3rem;
-    }
-
-    .sc1-slider {
-        width: 57.8rem;
-    }
-
-    .sc1-slider .t-wrap h3 {
-        font-size: 1.8rem;
-        line-height: 2.6rem;
-        margin: 2rem 0 1.5rem;
-    }
-
-    .gradient-link {
-        height: 5.6rem;
-    }
-
-    .sc-section-2 .sc2-lst {
-        gap: 1.2rem;
-    }
-
-    .info-wrap-1 .info-lst li {
-        font-size: 1.8rem;
-        line-height: 2.1rem;
-    }
-
-    .info-wrap-1 .info-lst li+li {
-        margin-top: 1.8rem;
-    }
-
+    
+    /* 정보 섹션 스타일 */
     .info-wrap-2 .info-lst {
-        gap: 2rem;
+        flex-direction: column;
+        background: linear-gradient(180deg, rgba(209, 78, 182, 0) 0%, rgba(72, 21, 235, 0.3) 100%);
+        margin: 5.4rem 0;
     }
-
+    
     .info-wrap-2 .info-lst li {
-        width: 27rem;
-        height: 27rem;
+        width: 100%; /* 리스트 항목이 화면 전체 너비를 차지 */
+        flex-direction: row;
     }
-
+    
+    .info-wrap-2 .info-lst li:nth-child(1),
+    .info-wrap-2 .info-lst li:nth-child(2),
+    .info-wrap-2 .info-lst li:nth-child(3) {
+        background: transparent;
+    }
+    
+    /* 번호 스타일 */
     .info-lst .num {
-        font-size: 1.8rem;
-    }
-
-    .info-lst h5,
-    .info-wrap-2 .info-lst li h5 {
-        font-size: 2.2rem;
-    }
-
-    .info-wrap-3 .info-lst p,
-    .info-wrap-2 .info-lst li p {
-        font-size: 1.6rem;
-        line-height: 2rem;
-    }
-
-    .info-wrap-3 .info-lst p.sm-tit {
+        display: flex;
+        width: 2.8rem;
+        height: 2.8rem;
+        border-radius: 50%;
         font-size: 1.2rem;
     }
-
-    .info-wrap-4 .info-lst li {
-        padding: 2rem;
+    
+    /* 결과 섹션 스타일 */
+    .sc-section-2 .sc2-lst li {
+        width: 48%; /* 각 항목이 한 줄에 2개씩 배치되도록 설정 */
     }
-
-    body.dark header.up nav .btn.mob-nav-btn {
-        background-image: url(../img/hamburger-wh.svg);
+    
+    .result-section .t-wrap h2.s-tit {
+        font-size: 2.6rem;
+        line-height: 3.9rem;
     }
-}
-
-/* 이하 생략 (1200px 이하, 767px 이하에서 구조 변경) */
-```
+    
+    .gradient-link {
+        width: 19.7rem;
+        height: 3.7rem;
+    }
+    
+    .result-lst li {
+        padding-bottom: 7rem;
+    }
+    
+    footer {
+        padding: 4.8rem 0 2.8rem;
+    }
+    
+    ```
+    
+    }
+    
+- 899px
+    
+    ```css
+    /* 화면 크기 899px 이하일 때 적용되는 스타일 */
+    @media screen and (max-width:899px) {
+    .mob-only{
+        display: block; /* 모바일 전용 콘텐츠 표시 */
+    }
+    
+    p.s-txt{
+        font-size: 1.6rem;
+    }
+    
+    /* 고정된 섹션 스타일 */
+    .fixed-section h2.s-tit{
+        width: 41.5rem;
+    }
+    
+    .sc-section-1 .flex-wrap{
+        margin: 4.4rem 0 5rem;
+    }
+    
+    /* 결과 섹션 스타일 */
+    .result-section {
+        padding: 8rem 0;
+    }
+    
+    .result-lst li {
+        padding-bottom: 4rem;
+    }
+    
+    /* 푸터 스타일 */
+    footer {
+        padding: 4rem 0 2.8rem;
+    }
+    
+    ```
+    
+    }
+    
+- 767px
+    
+    ```css
+    /* 화면 크기 767px 이하일 때 적용되는 스타일 */
+    @media screen and (max-width:767px) {
+    .logo-link{
+        width: 14rem; /* 로고 크기 변경 */
+    }
+    
+    .fixed-section h2.s-tit{
+        width: 31.5rem;
+    }
+    
+    .result-lst li{
+        width: 100%; /* 리스트 항목이 화면 전체 너비를 차지 */
+    }
+    
+    footer .in2{
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem; /* 푸터 내 요소들 세로로 정렬 */
+    }
+    
+    ```
+    
+    }
+    
 
 ### style.css
 
@@ -990,15 +1676,12 @@ body.dark header.up nav .sch-btn {
 ### javascript
 
 ```jsx
-// script.js - 페이지 동작, 애니메이션, 인터랙션 구현
-
-// HTML 로드 완료 후 실행
 window.addEventListener('DOMContentLoaded', () => {
 
-    // GSAP의 ScrollTrigger 플러그인 등록
+    // GSAP의 ScrollTrigger 플러그인을 등록
     gsap.registerPlugin(ScrollTrigger);
 
-    // 주요 요소들 변수로 지정
+    // 필요한 DOM 요소들을 선택
     const header = document.querySelector('header');
     const fixedSc = document.querySelector('.fixed-section');
     const container = document.querySelector('#container');
@@ -1007,115 +1690,153 @@ window.addEventListener('DOMContentLoaded', () => {
     const sc3 = document.querySelector('.sc-section-3');
     const resultSc = document.querySelector('.result-section');
     const mobNavBtn = document.querySelector('.mob-nav-btn');
+    const loading = document.querySelector('.loading');
 
-    let hasEntered = false; // resultSection 노출 여부 저장
+    // 페이지 로딩 시 로딩 화면 표시
+    loading.classList.add('On');
 
-    // 모바일 내비게이션 버튼 클릭 시 메뉴 열기/닫기
+    setTimeout(() => {
+        const tl = gsap.timeline();
+
+        // 로딩 화면의 투명도를 줄여서 사라지게 함
+        tl.to(loading, {
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+            onComplete: () => {
+                loading.style.display = 'none';
+                header.classList.add('load');
+            }
+        });
+
+        // fixed-section 안의 요소들에 지연된 애니메이션을 적용
+        tl.fromTo('.fixed-section .t-wrap>*', {
+            delay: 1,
+            opacity: 0,
+            y: 10
+        }, {
+            y: 0,
+            stagger: 0.3,
+            opacity: 1
+        });
+
+    }, 2000);
+
+    let hasEntered = false; // 결과 섹션에 한 번만 들어가도록 하는 플래그 변수
+
+    // 1. 모바일 네비게이션 버튼 클릭 시 네비게이션 모달 열기
     mobNavBtn.addEventListener('click', (e) => {
         e.preventDefault();
         body.classList.toggle('show-modal-nav');
     });
 
-    // (5) section-1의 bottom이 viewport top에 닿을 때 fixed-section 숨기기
+    // 5. 첫 번째 섹션(sc1)의 bottom이 viewport의 top에 닿을 때 fixedSc의 z-index 변경
     ScrollTrigger.create({
         trigger: sc1,
         start: 'bottom top',
-        onEnter: () => gsap.set(fixedSc, { zIndex: -1 }), // 사라짐
-        onLeaveBack: () => gsap.set(fixedSc, { zIndex: 2 }) // 다시 보이게
+        onEnter: () => gsap.set(fixedSc, { zIndex: -1 }),  // 첫 번째 섹션이 bottom에 닿을 때 fixedSc의 z-index를 -1로 설정
+        onLeaveBack: () => gsap.set(fixedSc, { zIndex: 2 }),  // 첫 번째 섹션이 다시 상단으로 올라갈 때 fixedSc의 z-index를 2로 설정
     });
 
-    // (6) result-section이 viewport에 들어오면 position 바꾸기
+    // 6. 스크롤 시 sc3 섹션의 bottom이 viewport에 닿을 때 result 섹션 위치 변경
     window.addEventListener('scroll', () => {
-        const rect = sc3.getBoundingClientRect(); // sc3의 위치 측정
-        const sc3BottomVp = rect.bottom <= 5; // sc3가 거의 화면 위로 사라졌는지 여부
+        const rect = sc3.getBoundingClientRect();
+        const sc3BottomVp = rect.bottom <= 5;  // sc3 섹션의 bottom이 viewport 상단에 근접하면 true
 
         if (sc3BottomVp && !hasEntered) {
-            resultSc.style.position = 'relative';
-            resultSc.style.zIndex = '1';
-            container.style.paddingBottom = '0';
-            hasEntered = true;
+            resultSc.style.position = 'relative';  // 결과 섹션을 상대 위치로 변경
+            resultSc.style.zIndex = '1';  // z-index를 1로 설정하여 화면에 보이도록 함
+            container.style.paddingBottom = '0';  // 컨테이너의 아래쪽 패딩을 없앰
+            hasEntered = true;  // 결과 섹션이 표시되었음을 표시
         } else if (!sc3BottomVp && hasEntered) {
-            resultSc.style.position = 'fixed';
-            resultSc.style.zIndex = '-1';
-            container.style.paddingBottom = '100vh';
-            hasEntered = false;
+            resultSc.style.position = 'fixed';  // 결과 섹션을 고정 위치로 변경
+            resultSc.style.zIndex = '-1';  // z-index를 -1로 설정하여 결과 섹션을 숨김
+            container.style.paddingBottom = '100vh';  // 컨테이너 아래쪽에 패딩을 다시 추가하여 결과 섹션을 숨김
+            hasEntered = false;  // 결과 섹션이 숨겨졌음을 표시
         }
     });
 
-    // (1) header load 시 애니메이션
-    header.classList.add('load');
-
-    // (2) 스크롤 방향에 따라 header 표시 여부
+    // 2. 휠 이벤트를 통해 헤더의 효과를 조정 (휠 방향에 따라 클래스 토글)
     window.addEventListener('wheel', (event) => {
-        if (event.deltaY < 0) { // 위로 스크롤
-            header.classList.add('up');
+        if (event.deltaY < 0) {
+            header.classList.add('up');  // 휠을 위로 스크롤하면 헤더에 'up' 클래스 추가
+
             if (window.scrollY === 0) {
-                header.classList.remove('up');
+                header.classList.remove('up');  // 페이지 최상단에 있을 경우 'up' 클래스 제거
             }
-        } else { // 아래로 스크롤
-            header.classList.remove('up');
+        } else {
+            header.classList.remove('up');  // 휠을 아래로 스크롤하면 'up' 클래스 제거
         }
     });
 
-    // (3) fixed-section 배경 점차 어둡게
+    // 3. fixedSc가 점차 어두워지는 효과 (스크롤에 따라 배경색 변경)
     gsap.to(fixedSc, {
-        backgroundColor: '#000',
-        ease: 'power2.out',
+        backgroundColor: '#000',  // 배경색을 검정으로 변경
+        ease: 'power2.out',  // 애니메이션의 easing 효과
         scrollTrigger: {
             trigger: container,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
+            start: 'top top',  // 컨테이너의 상단이 화면 상단에 닿을 때
+            end: 'bottom top',  // 컨테이너의 하단이 화면 상단에 닿을 때
+            scrub: true  // 스크롤에 따라 애니메이션이 진행되도록 설정
         }
     });
 
-    // (4) dark 클래스 toggle - sc1 지나갈 때 body에 dark 클래스 적용
+    // 4. dark 모드 클래스 추가 및 제거
     gsap.to(sc1, {
         scrollTrigger: {
             trigger: sc1,
-            start: 'bottom 70%',
-            end: 'bottom 75%',
-            scrub: true,
-            onEnter: () => body.classList.add('dark'),
-            onLeaveBack: () => body.classList.remove('dark')
+            start: 'bottom 70%',  // 첫 번째 섹션의 bottom이 화면의 70%에 닿을 때
+            end: 'bottom 75%',  // 첫 번째 섹션의 bottom이 화면의 75%에 닿을 때
+            scrub: true,  // 스크롤에 따라 애니메이션이 진행되도록 설정
+            onEnter: () => {
+                body.classList.add('dark');  // 다크 모드 클래스 추가
+            },
+            onLeaveBack: () => {
+                body.classList.remove('dark');  // 다크 모드 클래스 제거
+            }
         }
     });
 
-    /* jQuery로 검색창 관련 모달 제어 */
-    $(function () {
+    // jQuery를 사용한 스크립트 (모달 관련)
+    $(function () {  // jQuery 시작
+
         const navSchBtn = $('nav .sch-btn');
         const body = $('body');
         const schModalBg = $('.sch-modal-bg');
         const overlay = $('.overlay');
 
-        // 검색 버튼 클릭 시 모달 열기
+        // 네비게이션 검색 버튼 클릭 시 검색 모달 표시
         navSchBtn.on('click', function (e) {
             e.preventDefault();
-            schModalBg.slideDown();
+            schModalBg.slideDown();  // 검색 모달 배경이 슬라이드 다운
+
             setTimeout(function () {
-                body.addClass('sch-modal-open');
+                body.addClass('sch-modal-open');  // 모달 열기
             }, 200);
         });
 
         // 오버레이 클릭 시 모달 닫기
         overlay.on('click', function (e) {
             e.preventDefault();
-            schModalBg.slideUp();
+            schModalBg.slideUp();  // 검색 모달 배경이 슬라이드 업
+
             setTimeout(function () {
-                body.removeClass('sch-modal-open');
+                body.removeClass('sch-modal-open');  // 모달 닫기
             }, 200);
         });
-    });
 
-    // Swiper 슬라이더 초기화 (section-1에서 사용)
+    });  // jQuery 끝
+
+    // Swiper 슬라이더 초기화 (첫 번째 섹션에 있는 이미지 슬라이드)
     const sc1Slider = new Swiper(".sc1-slider", {
         navigation: {
             nextEl: ".sc-section-1 .swiper-button-next",
             prevEl: ".sc-section-1 .swiper-button-prev",
         },
-        spaceBetween: 30,
-        slidesPerView: 1
+        spaceBetween: 30,  // 슬라이드 간격 설정
+        slidesPerView: 1  // 한 번에 보이는 슬라이드 수
     });
+
 });
 
 ```
